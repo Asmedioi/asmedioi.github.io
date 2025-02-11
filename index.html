@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>The Realm of the Asmedioi</title>
+        <title>Archives of the Asmedioi</title>
         <link rel="stylesheet" href="./style.css">
     </head>
     <body>
         <nav id="a-nav">
-            <a href="https://Asmedioi.github.io"><li class="nav-li" id="logo">Asmedioi</li></a>
+            <a href="https://Asmedioi.github.io"><li id="logo"><span id="little">archives of the </span><span>Asmedioi</span></li></a>
             <a href="https://Asmedioi.github.io/IRUC"><li class="nav-li">IRUC</li></a>
             <a><li class="nav-li">wasd</li></a>
         </nav>
@@ -16,18 +16,25 @@
                 anime({
                     targets: '#logo',
                     top: '2.5vh',
-                    left: '5vw',
+                    left: '3vw',
+                    width: '6vw',
                     transform: 'translate(0%, 0%)',
-                    fontSize: '2vw',
-                    easing: 'easeInOutQuad',
+                    fontSize: '1vw',
+                    easing: 'easeInOutSine',
                     complete: function(anim){
                         document.getElementById('logo').style.position='relative'
+                        document.getElementById('logo').classList.add("nav-li")
                     }
+                });
+                anime({
+                    targets: '#little',
+                    fontSize: '0.5vw',
+                    easing: 'easeInOutSine',
                 });
                 anime({
                     targets: '#a-nav',
                     top: '0',
-                    easing: 'easeInOutQuad',
+                    easing: 'easeInOutSine',
                 });
             }, 2000);
         </script>
