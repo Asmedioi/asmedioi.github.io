@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>The Realm of the Asmedioi</title>
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <nav id="a-nav">
+            <a href="https://Asmedioi.github.io"><li class="nav-li" id="logo">Asmedioi</li></a>
+            <a href="https://Asmedioi.github.io/IRUC"><li class="nav-li">IRUC</li></a>
+            <a><li class="nav-li">wasd</li></a>
+        </nav>
+        <script src="res/anime.js"></script>
+        <script>
+            setTimeout(() => {
+                anime({
+                    targets: '#logo',
+                    top: '2.5vh',
+                    left: '5vw',
+                    transform: 'translate(0%, 0%)',
+                    fontSize: '2vw',
+                    easing: 'easeInOutQuad',
+                    complete: function(anim){
+                        document.getElementById('logo').style.position='relative'
+                    }
+                });
+                anime({
+                    targets: '#a-nav',
+                    top: '0',
+                    easing: 'easeInOutQuad',
+                });
+            }, 2000);
+        </script>
+    </body>
+</html>
