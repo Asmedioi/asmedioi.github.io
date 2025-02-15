@@ -1,42 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Archives of the Asmedioi</title>
-        <link rel="stylesheet" href="./style.css">
-    </head>
-    <body>
-        <nav id="a-nav">
-            <a href="https://Asmedioi.github.io"><li id="logo"><span id="little">archives of the </span><span>Asmedioi</span></li></a>
-            <a href="https://Asmedioi.github.io/IRUC"><li class="nav-li">IRUC</li></a>
-            <a><li class="nav-li">wasd</li></a>
-        </nav>
-        <script src="res/anime.js"></script>
-        <script>
-            setTimeout(() => {
-                anime({
-                    targets: '#logo',
-                    top: '2.5vh',
-                    left: '3vw',
-                    width: '6vw',
-                    transform: 'translate(0%, 0%)',
-                    fontSize: '1vw',
-                    easing: 'easeInOutSine',
-                    complete: function(anim){
-                        document.getElementById('logo').style.position='relative'
-                        document.getElementById('logo').classList.add("nav-li")
-                    }
-                });
-                anime({
-                    targets: '#little',
-                    fontSize: '0.5vw',
-                    easing: 'easeInOutSine',
-                });
-                anime({
-                    targets: '#a-nav',
-                    top: '0',
-                    easing: 'easeInOutSine',
-                });
-            }, 2000);
-        </script>
-    </body>
+
+<head>
+    <title>Archives of the Asmedioi</title>
+    <link rel="stylesheet" href="./style.css">
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <nav id="navshell"></nav>
+    <nav id="a-nav">
+        <li class="nav-li" id="logoshell"></li>
+        <a href="">
+            <li id="logo"><span id="little">archives of the </span><span>Asmedioi</span></li>
+        </a>
+        <a href="./IRUC/">
+            <li class="nav-li">IRUC</li>
+        </a>
+        <a href="./StickQuest/">
+            <li class="nav-li">StickQuest</li>
+        </a>
+        <a href="javascript:window.open('https://Asmedidoi.miraheze.org')">
+            <li class="nav-li img"><img width="50" height="50" src="res/icons/miraheze.png" alt="Miraheze"></li>
+        </a>
+        <a href="javascript:window.open('https://discord.gg/Asmedioi')">
+            <li class="nav-li img"><img width="50" height="40" src="res/icons/discord.png" alt="Discord"></li>
+        </a>
+        <a href="javascript:window.open('https://reddit.com/r/Asmedioi')">
+            <li class="nav-li img"><img width="50" height="50" src="res/icons/reddit.png" alt="Reddit"></li>
+        </a>
+    </nav>
+    <script src="res/js/anime.js"></script>
+    <script src="res/js/jquery-1.7.2.js"></script>
+    <script src="res/js/csi.js"></script>
+    <!--#include virtual="page.html"-->
+    <script>
+        setTimeout(() => {
+            anime({
+                targets: '#logo',
+                top: '4vh',
+                left: '75px',
+                width: '125px',
+                transform: 'translate(0%, 0%)',
+                fontSize: '23px',
+                easing: 'easeInOutSine',
+                complete: function (anim) {
+                    document.getElementById('logoshell').remove()
+                    document.getElementById('logo').style.position = 'relative'
+                    document.getElementById('logo').classList.add('nav-li')
+                    document.getElementById('page-content').style.opacity = '100%'
+
+                }
+            });
+            anime({
+                targets: '#little',
+                fontSize: '12px',
+                easing: 'easeInOutSine',
+            });
+            anime({
+                targets: '#a-nav',
+                top: '0',
+                easing: 'easeInOutSine',
+                complete: function (anim) {
+                    document.getElementById('navshell').remove()
+                },
+            });
+        }, 2000);
+    </script>
+</body>
+
 </html>
