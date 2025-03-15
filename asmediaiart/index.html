@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Generator</title>
+    <style>
+        body {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            background-color: #030303;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            width: 100%;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #f86635;
+        }
+
+        .input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+
+        .uniqueCSS {
+            width: 100%;
+            max-width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-right: 1%;
+            cursor: pointer;
+            text-align: center;
+            background-color: #f86635;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .uniqueCSS:hover {
+            background-color: #0d1267;
+        }
+
+        #generateOutput {
+            background-color: #f86635;
+            color: white;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.2s ease-in-out;
+            margin-bottom: 20px;
+            height: 50px;
+        }
+
+        #generateOutput:hover {
+            background-color: #0d1267;
+            transform: scale(1.05);
+        }
+
+        #downloadImage {
+            background-color: #f86635;
+            color: white;
+            border-radius: 5px;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 10px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        #downloadImage:hover {
+            background-color: #0d1267;
+        }
+
+        .outputBoxes {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .outputBoxes > div {
+            background-color: transparent;
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+        }
+
+        #aspectRatioDropdown {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 8px;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 200px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-align-last: center;
+            transition: all 0.2s ease-in-out;
+            height: 40px;
+        }
+
+        #aspectRatioDropdown:hover {
+            background-color: #f7f7f7;
+        }
+        .outputBoxes {
+            flex-direction: column;
+        }
+
+        #promptText {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            transition: all 0.2s ease-in-out;
+        }
+
+        #promptText:focus {
+            outline: none;
+            border-color: #0d1267;
+        }
+
+        #instruction {
+            width: 100%;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>AsmediAIArt</h1>
+    <div class="container">
+        <p id="instruction"><strong>Generate an image:</strong>
+        <br>1. Enter a prompt <br>2. Choose an aspect ratio,<br>3. Click "Generate Image"<br> 4. Download the image</p>
+        <div class="input-container">
+            <input type="text" id="promptText" placeholder="Enter prompt">
+            <select id="aspectRatioDropdown">
+                <option value="1:1">1:1</option>
+                <option value="4:3">4:3</option>
+                <option value="16:9">16:9</option>
+            </select>
+            <button id="generateOutput">Generate Image</button>
+            <br>
+            <div class="loading-spinner"></div>
+            <div class="outputBoxes"></div>
+        </div>
+        <div id="outputContainer"></div>
+        <div id="spinner"></div>
+    </div>
+    <script>
+        async function generateImage() {
+	    const prompt = document.getElementById('promptText').value;
+	    const aspectRatio = document.getElementById('aspectRatioDropdown').value;
+	    const outputContainer = document.querySelector('.outputBoxes');
+	    const spinner = document.querySelector('.loading-spinner');
+	
+	    // Show loading spinner
+	    spinner.style.display = 'block';
+	
+	    const apiUrl = `https://1yjs1yldj7.execute-api.us-east-1.amazonaws.com/default/ai_image?prompt=${encodeURIComponent(prompt)}&aspect_ratio=${aspectRatio}&link=${encodeURIComponent('yourmom.com')}`;
+	
+	    try {
+	        const response = await fetch(apiUrl);
+	        const data = await response.json();
+	
+	        const imageUrl = data.image_link;
+	
+	        // Hide spinner
+	        spinner.style.display = 'none';
+	
+	        const imgElement = document.createElement('img');
+	        imgElement.src = imageUrl;
+	        imgElement.alt = "Generated Image";
+	        imgElement.style.maxWidth = '100%';
+	
+	        const downloadButton = document.createElement('button');
+	        downloadButton.id = 'downloadImage';
+	        downloadButton.textContent = 'Download Image';
+	        downloadButton.classList.add('uniqueCSS');
+	
+	        downloadButton.addEventListener('click', function (e) {
+	            e.preventDefault();
+	            downloadImage(imageUrl, prompt);
+	        });
+	
+	        const imageContainer = document.createElement('div');
+	        imageContainer.appendChild(imgElement);
+            imageContainer.appendChild(document.createElement('p')).innerHTML = 'Prompt: ' + prompt + "<br>URL: " + imageUrl;
+	        imageContainer.appendChild(downloadButton);
+	
+	        outputContainer.innerHTML = '';
+	        outputContainer.appendChild(imageContainer);
+	
+	    } catch (error) {
+	        spinner.style.display = 'none';
+	        alert('Error generating image: ' + error.message);
+	    }
+	}
+
+    function downloadImage(url, filename) {
+        fetch(url)
+            .then(response => response.blob())
+            .then(blob => {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = getFileNameFromPrompt(filename) + '.png';
+                link.click();
+            })
+            .catch(error => console.error('Error downloading image:', error));
+        }
+
+    document.getElementById('generateOutput').addEventListener('click', generateImage);
+    </script>
+</html>
